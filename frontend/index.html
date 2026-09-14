@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conecta 4 · 1vs1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- Cache-busting manual: sube ?v=N cada vez que edites style.css/app.js -->
+  <link rel="stylesheet" href="/static/style.css?v=2" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>🔴 Conecta 4 <span>1 vs 1</span></h1>
+    </header>
+
+    <!-- ======================================================
+         Menú principal (home/inventario/ranking/tienda): 100% genérico,
+         no hace falta tocar esta parte salvo textos/emoji de marca.
+         ====================================================== -->
+    <section id="home-screen" class="home-shell hidden">
+      <div class="shell-inner">
+        <div class="shell-topbar">
+          <button type="button" id="home-profile-summary" class="shell-profile">
+            <span class="shell-avatar-wrap">
+              <span id="home-avatar" class="shell-avatar">🙂</span>
+              <span class="shell-avatar-edit">✎</span>
+            </span>
+            <span class="shell-profile-text">
+              <strong id="home-name">Jugador</strong>
+              <small>Jugador</small>
+            </span>
+          </button>
+          <div class="shell-topbar-actions">
+            <button type="button" id="open-settings-btn" class="shell-round-btn" aria-label="Ajustes" title="Ajustes">⚙️</button>
+            <button type="button" id="open-messages-btn" class="shell-round-btn" aria-label="Mensajes" title="Mensajes">✉️</button>
+          </div>
+        </div>
+
+        <div class="shell-title-block">
+          <h1 class="shell-title">Conecta 4 <span>1 vs 1</span></h1>
+          <p class="shell-subtitle">Menú Principal</p>
+        </div>
+
+        <div class="shell-actions">
+          <button type="button" id="find-match-btn" class="shell-cta shell-cta-primary">
+            <span class="shell-cta-icon">🎲</span>
+            Buscar Rival
+          </button>
+          <button type="button" id="play-friends-btn" class="shell-cta shell-cta-secondary">
+            <span class="shell-cta-icon">👥</span>
+            Jugar con Amigos
+          </button>
+        </div>
+
+        <p id="messages-toast" class="shell-toast hidden">No tienes mensajes nuevos todavía ✉️</p>
+      </div>
+
+      <nav class="shell-bottom-nav">
+        <button type="button" class="shell-nav-item active" data-nav="home">
+          <span>🏠</span><small>Inicio</small>
+        </button>
+        <button type="button" class="shell-nav-item" data-nav="inventory">
+          <span>🎒</span><small>Inventario</small>
+        </button>
+        <button type="button" class="shell-nav-item" data-nav="ranking">
+          <span>🏆</span><small>Ranking</small>
+        </button>
+        <button type="button" class="shell-nav-item" data-nav="shop">
+          <span>🛍️</span><small>Tienda</small>
+        </button>
+      </nav>
+    </section>
+
+    <!-- Inventario/Ranking/Tienda: igual de genéricos, se pueblan desde
+         app.js. Bórralas junto con su bottom-nav item si no incluyes el
+         módulo de monedas/tienda/ranking (ver references/feature-modules.md). -->
+    <section id="inventory-screen" class="home-shell hidden">
+      <div class="shell-inner">
+        <div class="shell-header-row">
+          <h2 class="shell-page-title">🎒 Inventario</h2>
+          <span class="shell-coins"><span class="coin-icon"></span> <span id="inventory-coins">0</span></span>
+        </div>
+
+        <p class="shell-section-label">Tu avatar equipado</p>
+        <div class="shell-equipped-avatar" id="inventory-equipped-avatar">🙂</div>
+
+        <p class="shell-section-label">Avatares</p>
+        <div id="inventory-avatar-grid" class="shell-grid"></div>
+
+        <p class="shell-section-label">Temas de color desbloqueados</p>
+        <div id="inventory-theme-grid" class="shell-grid"></div>
+
+        <p class="shell-section-label">Marcos de avatar desbloqueados</p>
+        <div id="inventory-frame-grid" class="shell-grid"></div>
+      </div>
+
+      <nav class="shell-bottom-nav">
+        <button type="button" class="shell-nav-item" data-nav="home"><span>🏠</span><small>Inicio</small></button>
+        <button type="button" class="shell-nav-item active" data-nav="inventory"><span>🎒</span><small>Inventario</small></button>
+        <button type="button" class="shell-nav-item" data-nav="ranking"><span>🏆</span><small>Ranking</small></button>
+        <button type="button" class="shell-nav-item" data-nav="shop"><span>🛍️</span><small>Tienda</small></button>
+      </nav>
+    </section>
+
+    <section id="ranking-screen" class="home-shell hidden">
+      <div class="shell-inner">
+        <h2 class="shell-page-title">🏆 Ranking</h2>
+
+        <div class="shell-rank-card glass-card">
+          <span class="shell-rank-tier" id="ranking-tier">Bronce 🥉</span>
+          <span class="shell-rank-caption">Tu rango actual</span>
+        </div>
+
+        <div class="shell-stats-grid">
+          <div class="shell-stat-card glass-card">
+            <strong id="ranking-wins">0</strong>
+            <small>Victorias</small>
+          </div>
+          <div class="shell-stat-card glass-card">
+            <strong id="ranking-losses">0</strong>
+            <small>Derrotas</small>
+          </div>
+          <div class="shell-stat-card glass-card">
+            <strong id="ranking-winrate">0%</strong>
+            <small>% Victorias</small>
+          </div>
+          <div class="shell-stat-card glass-card">
+            <strong id="ranking-streak">0</strong>
+            <small>Mejor racha</small>
+          </div>
+        </div>
+      </div>
+
+      <nav class="shell-bottom-nav">
+        <button type="button" class="shell-nav-item" data-nav="home"><span>🏠</span><small>Inicio</small></button>
+        <button type="button" class="shell-nav-item" data-nav="inventory"><span>🎒</span><small>Inventario</small></button>
+        <button type="button" class="shell-nav-item active" data-nav="ranking"><span>🏆</span><small>Ranking</small></button>
+        <button type="button" class="shell-nav-item" data-nav="shop"><span>🛍️</span><small>Tienda</small></button>
+      </nav>
+    </section>
+
+    <section id="shop-screen" class="home-shell hidden">
+      <div class="shell-inner">
+        <div class="shell-header-row">
+          <h2 class="shell-page-title">🛍️ Tienda</h2>
+          <span class="shell-coins"><span class="coin-icon"></span> <span id="shop-coins">0</span></span>
+        </div>
+        <p class="shell-section-label">Gana 10 monedas por cada victoria y desbloquea cosas nuevas para la app.</p>
+
+        <p class="shell-section-label">Temas de color</p>
+        <div id="shop-theme-grid" class="shell-grid"></div>
+
+        <p class="shell-section-label">Avatares premium</p>
+        <div id="shop-avatar-grid" class="shell-grid"></div>
+
+        <p class="shell-section-label">Marcos de avatar</p>
+        <div id="shop-frame-grid" class="shell-grid"></div>
+
+        <p class="shell-section-label">Código de regalo</p>
+        <div class="shell-giftcode-row">
+          <input type="text" id="gift-code-input" class="shell-giftcode-input" placeholder="Introduce un código" autocomplete="off" />
+          <button type="button" id="gift-code-btn" class="shell-giftcode-btn">Canjear</button>
+        </div>
+        <p id="gift-code-message" class="shell-giftcode-message"></p>
+      </div>
+
+      <nav class="shell-bottom-nav">
+        <button type="button" class="shell-nav-item" data-nav="home"><span>🏠</span><small>Inicio</small></button>
+        <button type="button" class="shell-nav-item" data-nav="inventory"><span>🎒</span><small>Inventario</small></button>
+        <button type="button" class="shell-nav-item" data-nav="ranking"><span>🏆</span><small>Ranking</small></button>
+        <button type="button" class="shell-nav-item active" data-nav="shop"><span>🛍️</span><small>Tienda</small></button>
+      </nav>
+    </section>
+
+    <!-- ======================================================
+         Pantallas secundarias: 100% genéricas (perfil, ajustes, amigos,
+         código de sala, lobby, selector de modo, esperando rival, fin de
+         partida). Solo el interior de #game-screen tiene una parte
+         GAME-SPECIFIC (el tablero).
+         ====================================================== -->
+    <section id="profile-screen" class="screen hidden">
+      <h2>Tu perfil</h2>
+
+      <div class="profile-header">
+        <span id="profile-avatar-preview" class="profile-avatar-preview">🙂</span>
+        <input type="text" id="name-input" maxlength="20" placeholder="Jugador" autocomplete="off" class="profile-name-input" />
+      </div>
+
+      <div class="profile-stats-row">
+        <button type="button" id="profile-coins-chip" class="profile-chip">
+          <strong><span class="coin-icon"></span><span id="profile-coins">0</span></strong>
+          <small>Monedas</small>
+        </button>
+        <button type="button" id="profile-rank-chip" class="profile-chip">
+          <strong id="profile-rank">🥉</strong>
+          <small>Rango</small>
+        </button>
+        <button type="button" id="profile-record-chip" class="profile-chip">
+          <strong id="profile-record">0-0</strong>
+          <small>V-D</small>
+        </button>
+      </div>
+
+      <label class="field-label">Elige tu avatar</label>
+      <div id="avatar-picker" class="avatar-picker"></div>
+
+      <button type="button" id="profile-save-btn" class="primary-btn">Guardar</button>
+      <button type="button" id="profile-back-btn" class="back-btn" aria-label="Volver">←</button>
+    </section>
+
+    <section id="settings-screen" class="screen hidden">
+      <h2>Ajustes</h2>
+
+      <button type="button" id="theme-toggle-row" class="settings-row">
+        <span class="settings-row-label"><span id="theme-icon">🌙</span> Tema</span>
+        <span class="settings-row-value" id="theme-value">Oscuro</span>
+      </button>
+
+      <button type="button" id="sound-toggle-row" class="settings-row">
+        <span class="settings-row-label"><span id="sound-icon">🔊</span> Sonido</span>
+        <span class="settings-row-value" id="sound-value">Activado</span>
+      </button>
+
+      <button type="button" id="settings-back-btn" class="back-btn" aria-label="Volver">←</button>
+    </section>
+
+    <section id="friends-screen" class="screen hidden">
+      <h2>Jugar con amigos</h2>
+
+      <button type="button" id="create-room-btn" class="home-btn home-btn-primary">
+        <span class="home-btn-icon">🆕</span>
+        <span class="home-btn-text">
+          <strong>Crear partida</strong>
+          <small>Genera un código para invitar</small>
+        </span>
+      </button>
+
+      <button type="button" id="join-room-btn" class="home-btn home-btn-secondary">
+        <span class="home-btn-icon">🔑</span>
+        <span class="home-btn-text">
+          <strong>Unirme con código</strong>
+          <small>Tengo un código o enlace</small>
+        </span>
+      </button>
+
+      <button type="button" id="friends-back-btn" class="back-btn" aria-label="Volver">←</button>
+    </section>
+
+    <section id="join-code-screen" class="screen hidden">
+      <h2>Unirse a una partida</h2>
+      <p class="muted">Introduce el código que te ha compartido tu amigo</p>
+      <input type="text" id="join-code-input" class="code-input" maxlength="5" placeholder="ABCDE" autocomplete="off" />
+      <p class="error" id="join-code-error"></p>
+      <button type="button" id="join-code-check-btn" class="primary-btn">Unirme</button>
+      <button type="button" id="join-code-back-btn" class="back-btn" aria-label="Volver">←</button>
+    </section>
+
+    <section id="room-code-screen" class="screen hidden">
+      <h2>Invita a tu amigo</h2>
+      <p class="muted">Comparte este código o el enlace con quien quieras que juegue contigo</p>
+      <div class="room-code-display" id="room-code-display">-----</div>
+      <button type="button" id="copy-code-btn" class="primary-btn">📋 Copiar código</button>
+      <button type="button" id="copy-link-btn" class="secondary-btn">🔗 Copiar enlace</button>
+      <p id="copy-feedback" class="copy-feedback hidden">¡Copiado!</p>
+      <div class="spinner"></div>
+      <p class="muted">Esperando a que tu amigo se una...</p>
+      <button type="button" id="room-code-cancel-btn" class="link-btn">Cancelar</button>
+    </section>
+
+    <section id="lobby-screen" class="screen hidden">
+      <h2>Sala de amigos</h2>
+
+      <div class="lobby-players">
+        <div class="lobby-player">
+          <span class="lobby-player-avatar" id="lobby-you-avatar">🙂</span>
+          <span id="lobby-you-name">Tú</span>
+        </div>
+        <span class="lobby-vs">VS</span>
+        <div class="lobby-player">
+          <span class="lobby-player-avatar" id="lobby-opponent-avatar">🙂</span>
+          <span id="lobby-opponent-name">Rival</span>
+        </div>
+      </div>
+
+      <div id="lobby-host-controls" class="hidden">
+        <button type="button" id="lobby-confirm-mode-btn" class="primary-btn">Empezar partida</button>
+      </div>
+
+      <p id="lobby-guest-waiting" class="muted hidden">
+        Esperando a que el anfitrión elija el modo de juego...
+      </p>
+
+      <button type="button" id="lobby-cancel-btn" class="link-btn">Cancelar</button>
+    </section>
+
+    <section id="quickmatch-screen" class="screen hidden">
+      <h2>Buscar Rival</h2>
+      <p class="error" id="quickmatch-error"></p>
+      <button type="button" id="quickmatch-search-btn" class="primary-btn">Buscar partida</button>
+      <button type="button" id="quickmatch-back-btn" class="back-btn" aria-label="Volver">←</button>
+    </section>
+
+    <section id="waiting-screen" class="screen hidden">
+      <div class="spinner"></div>
+      <p id="waiting-text">Buscando rival...</p>
+      <button type="button" id="waiting-cancel-btn" class="link-btn">Cancelar</button>
+    </section>
+
+    <section id="game-screen" class="screen hidden">
+      <p id="reconnect-banner" class="reconnect-banner hidden"></p>
+
+      <!-- Genérico: cabecera de partida (rival, marcador de sesión, turno) -->
+      <div class="status-bar">
+        <div class="status-left">
+          <span id="opponent-label">Rival: —</span>
+          <span id="score-label" class="score">0 – 0</span>
+        </div>
+        <span id="turn-indicator" class="badge">—</span>
+      </div>
+
+      <!-- GAME-SPECIFIC: "boxes-*" (renombrado piezas colocadas por cada
+           jugador) — el patrón "chip verde (yo) + icono + chip azul
+           (rival)" es genérico y reutilizable tal cual. -->
+      <div class="boxes-score-row">
+        <div class="boxes-chip boxes-chip-me">
+          <span class="boxes-chip-avatar" id="my-boxes-avatar">🙂</span>
+          <span class="boxes-chip-count" id="my-boxes-count">0</span>
+        </div>
+        <span class="boxes-vs-icon">🔴</span>
+        <div class="boxes-chip boxes-chip-opponent">
+          <span class="boxes-chip-count" id="opponent-boxes-count">0</span>
+          <span class="boxes-chip-avatar" id="opponent-boxes-avatar">🙂</span>
+        </div>
+      </div>
+
+      <!-- Genérico: barra de cronómetro de turno -->
+      <div class="timer-track">
+        <div id="timer-fill" class="timer-fill"></div>
+      </div>
+
+      <!-- GAME-SPECIFIC: tablero de Conecta 4 — rejilla de celdas HTML
+           (7 columnas x 6 filas). board-wrap ya trae la "bandeja" candy
+           (fondo con degradado + sombra interior) del sistema de diseño. -->
+      <div class="board-wrap" id="board-wrap">
+        <div id="board-grid" class="board-grid"></div>
+        <p id="game-toast" class="game-toast hidden"></p>
+      </div>
+      <p class="error" id="line-error"></p>
+
+      <!-- Genérico: chat en partida (borra si no incluyes este módulo) -->
+      <div class="chat-box">
+        <h2>💬 Chat</h2>
+        <ul id="chat-messages" class="chat-messages"></ul>
+        <form id="chat-form" class="chat-form">
+          <input type="text" id="chat-input" maxlength="200" placeholder="Escribe un mensaje..." autocomplete="off" />
+          <button type="submit" class="chat-send-btn">Enviar</button>
+        </form>
+      </div>
+
+      <button type="button" id="surrender-btn" class="link-btn">🏳️ Rendirse</button>
+    </section>
+
+    <section id="gameover-screen" class="screen hidden">
+      <h2 id="gameover-title">—</h2>
+      <p id="gameover-detail"></p>
+      <p id="gameover-score" class="score-final"></p>
+      <div class="gameover-actions">
+        <button id="rematch-btn" class="primary-btn">🔁 Jugar otra vez</button>
+        <button id="new-opponent-btn" class="link-btn" type="button">Volver al inicio</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="/static/app.js?v=2"></script>
+</body>
+</html>
