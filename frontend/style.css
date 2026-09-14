@@ -16,11 +16,9 @@
     radial-gradient(ellipse 780px 460px at 12% -8%, #3b82f666, transparent 60%),
     radial-gradient(ellipse 640px 480px at 108% 8%, #ff475733, transparent 58%),
     radial-gradient(ellipse 820px 560px at 50% 118%, #ffd23f2e, transparent 62%);
-  /* Sin foto de fondo generada todavía: solo --bg-glow (ver
-     references/design-system.md → "Fondos de menú"). Se deja --bg-photo:
-     none para no romper el background-image de dos capas de .home-shell;
-     sustitúyelo por url(...) si generas una imagen candy para el menú. */
-  --bg-photo: none;
+  /* Ilustración candy del tablero de Conecta 4 (fichas rojas/amarillas
+     cayendo, tablero azul) para el fondo del menú — ver DESIGN.md. */
+  --bg-photo: url("assets/bg-menu-dark.svg?v=3");
   --card: #1a2235;
   --card-border: #2b3652;
   --card-highlight: rgba(255, 255, 255, 0.045);
@@ -67,7 +65,7 @@
     radial-gradient(ellipse 780px 460px at 12% -8%, #bfdbfeaa, transparent 60%),
     radial-gradient(ellipse 640px 480px at 108% 8%, #fecaca99, transparent 58%),
     radial-gradient(ellipse 820px 560px at 50% 118%, #fde68a99, transparent 62%);
-  --bg-photo: none;
+  --bg-photo: url("assets/bg-menu-light.svg?v=3");
   --card: #ffffff;
   --card-border: #dbe4f7;
   --card-highlight: rgba(255, 255, 255, 0.7);
@@ -1244,7 +1242,7 @@ header h1,
    ============================================================ */
 
 :root {
-  --shell-grad: linear-gradient(165deg, rgba(6, 47, 42, 0.5) 0%, rgba(11, 42, 74, 0.4) 55%, rgba(16, 22, 46, 0.62) 100%);
+  --shell-grad: linear-gradient(165deg, rgba(15, 20, 32, 0.55) 0%, rgba(15, 20, 32, 0.4) 55%, rgba(10, 13, 22, 0.7) 100%);
   --shell-glass-bg: rgba(255, 255, 255, 0.08);
   --shell-glass-border: rgba(255, 255, 255, 0.14);
   --shell-glass-shadow: 0 8px 32px -12px rgba(0, 0, 0, 0.5);
@@ -1256,7 +1254,7 @@ header h1,
 }
 
 :root[data-theme="light"] {
-  --shell-grad: linear-gradient(165deg, rgba(167, 243, 208, 0.55) 0%, rgba(186, 230, 253, 0.4) 55%, rgba(239, 246, 255, 0.65) 100%);
+  --shell-grad: linear-gradient(165deg, rgba(219, 232, 255, 0.6) 0%, rgba(238, 243, 255, 0.45) 55%, rgba(247, 249, 255, 0.75) 100%);
   --shell-glass-bg: rgba(255, 255, 255, 0.55);
   --shell-glass-border: rgba(255, 255, 255, 0.7);
   --shell-glass-shadow: 0 8px 32px -12px rgba(15, 23, 42, 0.18);

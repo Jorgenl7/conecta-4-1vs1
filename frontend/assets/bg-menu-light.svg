@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1400" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#dbe8ff"/>
+      <stop offset="55%" stop-color="#eef3ff"/>
+      <stop offset="100%" stop-color="#f7f9ff"/>
+    </linearGradient>
+    <radialGradient id="discRed" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#ff8a93"/>
+      <stop offset="45%" stop-color="#ff4757"/>
+      <stop offset="100%" stop-color="#c81e2e"/>
+    </radialGradient>
+    <radialGradient id="discYellow" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff2b0"/>
+      <stop offset="45%" stop-color="#ffd23f"/>
+      <stop offset="100%" stop-color="#e0a300"/>
+    </radialGradient>
+    <linearGradient id="boardFace" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5b9bff"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <pattern id="holes" width="54.29" height="55.00" patternUnits="userSpaceOnUse" patternTransform="translate(470 -170)">
+      <circle cx="27.14" cy="27.50" r="18.46" fill="rgba(8,12,22,0.5)"/>
+    </pattern>
+    <filter id="blurL" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="42"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="1400" fill="url(#bg)"/>
+
+  <circle cx="80" cy="1050" r="130" fill="url(#discRed)" opacity="0.14" filter="url(#blurL)"/><circle cx="620" cy="1200" r="150" fill="url(#discYellow)" opacity="0.12" filter="url(#blurL)"/><circle cx="150" cy="250" r="90" fill="url(#discYellow)" opacity="0.1" filter="url(#blurL)"/>
+
+  
+  <g transform="rotate(10 660.0 -5.0)" opacity="0.45">
+    <rect x="470" y="-170" width="380" height="330" rx="32" fill="url(#boardFace)" />
+    <rect x="470" y="-170" width="380" height="330" rx="32" fill="url(#holes)" />
+    <circle cx="497.1" cy="132.5" r="20.6" fill="url(#discRed)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="551.4" cy="132.5" r="20.6" fill="url(#discRed)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="660.0" cy="132.5" r="20.6" fill="url(#discRed)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="551.4" cy="77.5" r="20.6" fill="url(#discRed)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="605.7" cy="22.5" r="20.6" fill="url(#discRed)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="660.0" cy="-32.5" r="20.6" fill="url(#discRed)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="714.3" cy="132.5" r="20.6" fill="url(#discYellow)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="714.3" cy="77.5" r="20.6" fill="url(#discYellow)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="497.1" cy="77.5" r="20.6" fill="url(#discYellow)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="822.9" cy="132.5" r="20.6" fill="url(#discYellow)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="822.9" cy="77.5" r="20.6" fill="url(#discYellow)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/><circle cx="605.7" cy="132.5" r="20.6" fill="url(#discYellow)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/>
+  </g>
+
+</svg>

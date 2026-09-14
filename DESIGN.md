@@ -13,14 +13,18 @@ pantallas secundarias — no solo los fondos.
 
 ## Fondos de menú
 
-- `frontend/assets/bg-menu-dark.jpg` — versión oscura.
-- `frontend/assets/bg-menu-light.jpg` — versión clara.
-- Tema visual: "fichas de caramelo rojo y amarillo cayendo sobre un
-  tablero de arcade azul brillante", estilo juego móvil casual — nostalgia
-  de Conecta 4 clásico pero con el acabado redondeado y saturado "candy".
-  Cualquier fondo nuevo debe generarse para **ambos** temas, no solo uno.
-  De momento el proyecto usa solo `--bg-glow` (sin foto) — ver
-  `references/design-system.md` del skill → "Fondos de menú".
+- `frontend/assets/bg-menu-dark.svg` — versión oscura.
+- `frontend/assets/bg-menu-light.svg` — versión clara.
+- Ilustración vectorial propia (no foto): un tablero de Conecta 4 azul,
+  ligeramente inclinado, con fichas rojas y amarillas a media partida
+  (incluye una diagonal ganadora como guiño), más "bokeh" de fichas
+  desenfocadas de fondo — estilo juego móvil casual, coherente con el
+  resto de la paleta "candy". Generada con SVG + gradientes (sin
+  dependencia de un asset externo), por lo que es liviana y escala sin
+  perder nitidez.
+- Referenciada desde `--bg-photo` en `style.css`. Si se reemplaza por otra
+  imagen (o se convierte a JPG/PNG), sube el `?v=N` en la URL para evitar
+  la caché del navegador.
 - Referenciados desde `--bg-photo` en `style.css`. Recuerda subir el
   `?v=N` al reemplazar el archivo (ver [CLAUDE.md](CLAUDE.md)).
 
