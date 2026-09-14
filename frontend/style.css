@@ -18,7 +18,7 @@
     radial-gradient(ellipse 820px 560px at 50% 118%, #ffd23f2e, transparent 62%);
   /* Ilustración candy del tablero de Conecta 4 (fichas rojas/amarillas
      cayendo, tablero azul) para el fondo del menú — ver DESIGN.md. */
-  --bg-photo: url("assets/bg-menu-dark.svg?v=3");
+  --bg-photo: url("assets/bg-menu-dark.svg?v=5");
   --card: #1a2235;
   --card-border: #2b3652;
   --card-highlight: rgba(255, 255, 255, 0.045);
@@ -65,7 +65,7 @@
     radial-gradient(ellipse 780px 460px at 12% -8%, #bfdbfeaa, transparent 60%),
     radial-gradient(ellipse 640px 480px at 108% 8%, #fecaca99, transparent 58%),
     radial-gradient(ellipse 820px 560px at 50% 118%, #fde68a99, transparent 62%);
-  --bg-photo: url("assets/bg-menu-light.svg?v=3");
+  --bg-photo: url("assets/bg-menu-light.svg?v=5");
   --card: #ffffff;
   --card-border: #dbe4f7;
   --card-highlight: rgba(255, 255, 255, 0.7);
