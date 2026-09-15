@@ -92,8 +92,16 @@ function beep({ freq = 440, duration = 0.15, type = "sine", volume = 0.2, delay 
 }
 
 const sounds = {
-  drop: () => beep({ freq: 480, duration: 0.07, type: "square", volume: 0.1 }),
-  connect: () => beep({ freq: 660, duration: 0.14, type: "triangle", volume: 0.18 }),
+  // Tap inmediato al soltar la ficha (antes de que el servidor confirme):
+  // un click seco y discreto, distinto del "clac" de aterrizaje.
+  drop: () => beep({ freq: 1100, duration: 0.02, type: "square", volume: 0.05 }),
+  // "Clac" de ficha de plástico al caer: un golpe agudo (borde) + un
+  // cuerpo medio (resonancia del disco) + un thud grave breve (peso).
+  connect: () => {
+    beep({ freq: 2400, duration: 0.02, type: "square", volume: 0.09 });
+    beep({ freq: 720, duration: 0.07, type: "triangle", volume: 0.22, delay: 0.012 });
+    beep({ freq: 260, duration: 0.09, type: "sine", volume: 0.12, delay: 0.018 });
+  },
   yourTurn: () => beep({ freq: 660, duration: 0.1, volume: 0.1 }),
   match: () => {
     beep({ freq: 440, duration: 0.1, volume: 0.15 });
@@ -1023,11 +1031,16 @@ function buildBoard() {
   }
 }
 
-function markPieceDropped(move, bySid) {
+function markPieceDropped(move, bySid, animate = true) {
   const key = cellKey(move.row, move.col);
   boardState[key] = bySid;
   const cell = cellEls[key];
   if (!cell) return;
+  if (animate) {
+    cell.style.setProperty("--fall-rows", move.row);
+    cell.classList.add("dropping");
+    cell.addEventListener("animationend", () => cell.classList.remove("dropping"), { once: true });
+  }
   cell.classList.add("filled", bySid === socket.id ? "mine" : "theirs");
 }
 
@@ -1103,9 +1116,14 @@ socket.on("drop_error", ({ message }) => {
   boardInteractive = isMyTurn && !matchFinished;
 });
 
+// Coincide con el keyframe del 62% de disc-fall (0.5s), el instante del
+// rebote al aterrizar, para que el "clac" de plástico suene justo cuando
+// la ficha toca fondo y no cuando empieza a caer.
+const DISC_LANDING_DELAY_MS = 310;
+
 socket.on("piece_dropped", ({ by, move, yourTurn, turnSeconds, piecesYou, piecesOpponent }) => {
   markPieceDropped(move, by);
-  sounds.connect();
+  setTimeout(() => sounds.connect(), DISC_LANDING_DELAY_MS);
   updateBoxScore(piecesYou, piecesOpponent);
   setTurn(yourTurn, turnSeconds);
 });
@@ -1299,7 +1317,7 @@ socket.on("rejoined", (data) => {
   opponentLabel.dataset.avatar = opponentAvatar;
   resetMatchUI();
 
-  (board || []).forEach((piece) => markPieceDropped(piece, piece.by));
+  (board || []).forEach((piece) => markPieceDropped(piece, piece.by, false));
 
   updateSessionScoreLabel(scoreYou, scoreOpponent);
   updateBoxScore(piecesYou, piecesOpponent);
