@@ -1404,3 +1404,14 @@ socket.on("connect", () => {
     socket.emit("rejoin", { token: myToken });
   }
 });
+
+/* Al volver a la pestaña (se desbloquea el móvil, se vuelve de otra app)
+   forzamos el intento de reconexión al instante en vez de esperar al
+   backoff automático de Socket.IO, que puede haber quedado "pausado"
+   mientras la pestaña estaba en segundo plano — cada segundo cuenta
+   dentro de los RECONNECT_GRACE_SECONDS del servidor. */
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && !socket.connected) {
+    socket.connect();
+  }
+});

@@ -56,9 +56,10 @@ jugadores. Backend en **FastAPI + Socket.IO** (WebSockets), frontend en
   volver a emparejarse. Empieza quien perdió la ronda anterior.
 - **Rendirse**: cualquiera puede rendirse durante la partida; el rival
   gana automáticamente.
-- **Reconexión**: si recargas la página a mitad de partida, recuperas tu
-  partida en curso (mismo rival, mismo tablero) en vez de perderla. Tu
-  rival ve un aviso de "esperando a que vuelva" durante 60 segundos.
+- **Reconexión**: si recargas la página, cierras la app o se bloquea el
+  móvil a mitad de partida, al volver recuperas tu partida en curso
+  (mismo rival, mismo tablero) en vez de perderla. Tu rival ve un aviso
+  de "esperando a que vuelva" durante 120 segundos.
 - **Chat** en la propia partida.
 - **Temporizador por turno**, sonidos y confeti al ganar (todo generado en
   el propio navegador, sin ficheros de audio externos).

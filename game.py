@@ -20,7 +20,10 @@ CONNECT_N = 4
 # === fin GAME-SPECIFIC ===
 
 TURN_SECONDS = 60
-RECONNECT_GRACE_SECONDS = 60
+# 120s en vez de 60s: en la práctica (móvil que se bloquea, cambiar de app
+# un momento, un corte breve de wifi) 60 segundos se queda corto y expulsa
+# de la partida a alguien que sigue ahí — ver CLAUDE.md.
+RECONNECT_GRACE_SECONDS = 120
 CHAMPION_WINS = 3
 
 # Conecta 4 clásico no tiene variantes de modo: un único modo fijo, sin

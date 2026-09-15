@@ -26,7 +26,12 @@ from game import (
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 
-sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*", ping_timeout=60, ping_interval=25)
+# ping_timeout más alto que el valor por defecto (60s en vez de 20s):
+# los navegadores móviles ralentizan/pausan los timers de una pestaña en
+# segundo plano (pantalla bloqueada, cambio de app), retrasando el "pong"
+# de Socket.IO — con un timeout corto el servidor daba por perdido al
+# jugador de inmediato aunque solo tuviera el móvil bloqueado un momento.
+sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*", ping_timeout=90, ping_interval=25)
 fastapi_app = FastAPI()
 socket_app = socketio.ASGIApp(sio, other_asgi_app=fastapi_app)
 
